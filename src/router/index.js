@@ -9,6 +9,12 @@ import OrderHistoryView from "../views/OrderHistoryView.vue";
 import ProductDetails from "../views/ProductDetails.vue";
 import AccountView from "../views/AccountView.vue";
 import Books from "../views/BooksView.vue";
+import ContactView from "../views/ContactView.vue";
+import ShippingView from "../views/ShippingView.vue";
+import FaqView from "../views/FaqView.vue";
+import PrivacyView from "../views/PrivacyView.vue";
+import TermsView from "../views/TermsView.vue";
+import AccessibilityView from "../views/AccessibilityView.vue";
 import { isLoggedIn } from "@/utils/auth";
 
 const routes = [
@@ -30,6 +36,16 @@ const routes = [
   { path: "/login", name: "Login", component: UserLogin },
   { path: "/account", name: "Account", component: AccountView },
   { path: "/books", name: "Books", component: Books },
+  { path: "/contact", name: "Contact", component: ContactView },
+  { path: "/shipping", name: "Shipping", component: ShippingView },
+  { path: "/faq", name: "FAQ", component: FaqView },
+  { path: "/privacy", name: "Privacy", component: PrivacyView },
+  { path: "/terms", name: "Terms", component: TermsView },
+  {
+    path: "/accessibility",
+    name: "Accessibility",
+    component: AccessibilityView,
+  },
 ];
 
 const router = createRouter({
@@ -41,10 +57,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // Define which routes require authentication
   const requiresAuth = [
-    "account",
+    "Account",
+    "OrderHistory",
+    "Checkout",
+    "OrderConfirmation",
     "purchases",
-    "checkout",
-    "orderHistory",
   ].includes(to.name);
 
   if (requiresAuth && !isLoggedIn()) {

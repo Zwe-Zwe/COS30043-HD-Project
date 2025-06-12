@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="d-flex flex-column min-vh-100">
     <AppNavbar/>
-    <router-view/>
+    <main class="flex-shrink-0">
+      <router-view/>
+    </main>
+    <AppFooter />
   </div>
 </template>
 
@@ -9,10 +12,12 @@
 import { onMounted } from 'vue';
 import { isLoggedIn, logout, validateSession, getUser } from '@/utils/auth';
 import AppNavbar from './components/AppNavbar.vue';
+import AppFooter from './components/AppFooter.vue';
 
 export default {
   components: {
-    AppNavbar
+    AppNavbar,
+    AppFooter
   },
 
   computed: {
@@ -27,7 +32,27 @@ export default {
     }
   },
   setup() {
-    onMounted(() => {
+    // Create initializeDatabase function inside setup to avoid 'this' context issue
+    async function initializeDatabase() {
+      try {
+        const response = await fetch('http://localhost/COS30043-HD-Project/api/init-db.php');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          console.log('Database initialized successfully');
+        } else {
+          console.warn('Database initialization warning:', data.message);
+        }
+      } catch (error) {
+        console.error('Database initialization error:', error);
+        // Continue anyway, as this is a best-effort operation
+      }
+    }
+
+    onMounted(async () => {
+      // Initialize database when app loads
+      await initializeDatabase();
+      
       // Validate user session when app loads
       const isValid = validateSession();
       
@@ -57,7 +82,6 @@ export default {
     });
   }
 }
-
 </script>
 
 
@@ -155,4 +179,14 @@ h3 {
     padding-right: 30px;
   }
 }
+
+/* Add styles to ensure footer stays at bottom */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+}
 </style>
+

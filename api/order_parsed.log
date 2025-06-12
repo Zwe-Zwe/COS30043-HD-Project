@@ -127,3 +127,255 @@ stdClass Object
 )
 
 
+=== 2025-06-12 22:44:57 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 90
+                    [title] => Anna Karenina
+                    [author] => Leo Tolstoy
+                    [imageLink] => images/anna-karenina.jpg
+                    [price] => 24.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-VO6A6ZR29
+        )
+
+    [subtotal] => 24.99
+    [shippingCost] => 5.99
+    [total] => 30.98
+    [userId] => 2
+)
+
+
+=== 2025-06-13 00:11:32 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 80
+                    [title] => Blindness
+                    [author] => José Saramago
+                    [imageLink] => images/blindness.jpg
+                    [price] => 15.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-SVZ5G84HC
+        )
+
+    [subtotal] => 15.99
+    [shippingCost] => 5.99
+    [total] => 21.98
+    [userId] => 2
+)
+
+
+=== 2025-06-13 00:16:59 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 30
+                    [title] => Absalom, Absalom!
+                    [author] => William Faulkner
+                    [imageLink] => images/absalom-absalom.jpg
+                    [price] => 15.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-938F7Y7GU
+        )
+
+    [subtotal] => 15.99
+    [shippingCost] => 5.99
+    [total] => 21.98
+    [userId] => 1
+)
+
+
+=== 2025-06-13 00:22:23 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 22
+                    [title] => Berlin Alexanderplatz
+                    [author] => Alfred Döblin
+                    [imageLink] => images/berlin-alexanderplatz.jpg
+                    [price] => 18.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping_address] => Zwe Htet Zaw
+千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+Chiba, Chiba Prefecture 2600844
+Phone: +601153048339
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-QZEJG3PQO
+        )
+
+    [subtotal] => 18.99
+    [shipping_cost] => 5.99
+    [tax] => 1.5192
+    [total] => 26.4992
+    [email] => zwehtetzaw777@gmail.com
+    [userId] => 1
+)
+
+
+=== 2025-06-13 00:23:02 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 22
+                    [title] => Berlin Alexanderplatz
+                    [author] => Alfred Döblin
+                    [imageLink] => images/berlin-alexanderplatz.jpg
+                    [price] => 18.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-W6J8UYHQ8
+        )
+
+    [subtotal] => 18.99
+    [shippingCost] => 5.99
+    [total] => 24.98
+    [userId] => 1
+)
+
+
+=== 2025-06-13 00:31:00 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 30
+                    [title] => Absalom, Absalom!
+                    [author] => William Faulkner
+                    [imageLink] => images/absalom-absalom.jpg
+                    [price] => 15.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-YYYTF8N98
+        )
+
+    [subtotal] => 15.99
+    [shippingCost] => 5.99
+    [total] => 21.98
+    [userId] => 1
+)
+
+

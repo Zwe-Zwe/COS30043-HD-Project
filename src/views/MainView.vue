@@ -1,47 +1,31 @@
 <template>
-  <div>
-    <!-- Hero Section with Components -->
-    <hero-section
-      title="Welcome to BookNest"
-      subtitle="Discover, purchase, and enjoy the best selection of books"
-      cta-text="Browse Collection"
-      cta-link="/books"
-    />
-
-    <!-- Featured Books Section -->
-    <section class="container mb-5">
-      <section-header
-        title="Featured Books"
-        icon="bi bi-stars"
-        view-all-link="/books"
-      />
-
-      <loading-spinner v-if="loading" message="Loading books..." />
-
-      <div v-else class="featured-books">
-        <div class="row g-4">
-          <div v-for="(book) in featuredBooks.slice(0, 8)" :key="book.id" 
-              class="col-6 col-md-3">
-            <!-- Static display version of BookCard (not clickable) -->
-            <div class="static-book-card">
-              <div class="card-image">
-                <img :src="getImageUrl(book.imageLink)" :alt="book.title">
+  <div class="main-view">
+    <!-- Compact Hero with Search -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 hero-content">
+            <h1 class="hero-title">Find your next read</h1>
+            <div class="search-container mt-4">
+              <div class="input-group">
+                <input 
+                  type="text" 
+                  class="form-control form-control-lg" 
+                  placeholder="Search books..." 
+                  v-model="searchQuery"
+                  @keyup.enter="searchBooks"
+                >
+                <button class="btn btn-primary" type="button" @click="searchBooks">
+                  <i class="bi bi-search"></i>
+                </button>
               </div>
-              <div class="card-content">
-                <div class="card-badges">
-                  <span class="genre-badge">{{ book.genre || 'Fiction' }}</span>
-                  <span class="rating-badge">
-                    <i class="bi bi-star-fill"></i> {{ (book.rating || 4.5).toFixed(1) }}
-                  </span>
-                </div>
-                <h5 class="book-title">{{ book.title }}</h5>
-                <p class="book-author">{{ book.author }}</p>
-                <div class="card-footer">
-                  <div class="price">${{ book.price.toFixed(2) }}</div>
-                  <router-link :to="`/books?genre=${book.genre || 'Fiction'}`" class="view-more-link">
-                    More like this <i class="bi bi-arrow-right"></i>
-                  </router-link>
-
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-image-wrapper">
+              <div class="floating-book-grid">
+                <div class="floating-book" v-for="(book, index) in featuredBooks.slice(0, 3)" :key="index">
+                  <img :src="getImageUrl(book.imageLink)" :alt="book.title" class="img-fluid shadow">
                 </div>
               </div>
             </div>
@@ -50,89 +34,81 @@
       </div>
     </section>
 
-    <!-- Promotions Banner -->
-    <section class="promotion-section mb-5 py-4">
+    <!-- Genre Pills -->
+    <section class="genre-pills-section">
       <div class="container">
-        <div class="promotion-card">
-          <div class="row align-items-center">
-            <div class="col-md-6">
-              <div class="promotion-content">
-                <span class="badge bg-danger mb-2">Limited Time</span>
-                <h2>Summer Reading Sale</h2>
-                <p class="lead">Get 20% off on bestsellers this month!</p>
-                <router-link to="/books?sale=true" class="btn btn-gradient">
-                  <i class="bi bi-tag-fill me-2"></i>Shop the Sale
-                </router-link>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <img src="https://source.unsplash.com/random/600x300/?books" alt="Summer sale" class="img-fluid rounded shadow">
-            </div>
-          </div>
+        <div class="genre-pill-container">
+          <router-link 
+            v-for="(genre, index) in popularGenres" 
+            :key="index"
+            :to="`/books?genre=${genre}`" 
+            class="genre-pill"
+          >
+            <i :class="getCategoryIcon(genre)"></i>
+            <span>{{ genre }}</span>
+          </router-link>
+          <router-link to="/books" class="genre-pill genre-pill-more">
+            <i class="bi bi-grid"></i>
+            <span>All Genres</span>
+          </router-link>
         </div>
       </div>
     </section>
 
-    <!-- Categories Section with Animated Cards -->
-    <section class="container mb-5">
-      <section-header title="Browse by Genre" icon="bi bi-grid-3x3-gap" />
-      <div class="row g-4">
-        <div 
-          v-for="(genre, index) in popularGenres" 
-          :key="index" 
-          class="col-6 col-md-4 col-lg-3"
-        >
-          <div class="category-card">
-            <div class="category-icon">
-              <i :class="getCategoryIcon(genre)"></i>
-            </div>
-            <h5>{{ genre }}</h5>
-            <router-link :to="`/books?genre=${genre}`"></router-link>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Recent News -->
-    <section class="container mb-5">
-      <section-header title="Book News & Events" icon="bi bi-newspaper" />
-      <div class="row">
-        <div 
-          v-for="(article, index) in newsArticles" 
-          :key="index" 
-          class="col-md-4 mb-4"
-        >
-          <div class="card h-100 news-card">
-            <div class="news-img-wrapper">
-              <img :src="article.image" class="card-img-top" :alt="article.title">
-              <div class="news-date">
-                <span>{{ article.date }}</span>
-              </div>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{ article.title }}</h5>
-              <p class="card-text">{{ article.excerpt }}</p>
-              <a href="#" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Newsletter Signup -->
-    <section class="newsletter-section py-5 mb-4">
+    <!-- Featured Books -->
+    <section class="book-section">
       <div class="container">
-        <div class="newsletter-card">
-          <div class="row justify-content-center">
-            <div class="col-md-8 text-center">
-              <i class="bi bi-envelope-paper-heart newsletter-icon"></i>
-              <h2>Stay Updated</h2>
-              <p class="mb-4">Subscribe to our newsletter for exclusive offers and updates</p>
-              <div class="input-group mb-3">
-                <input type="email" class="form-control" placeholder="Your email address" aria-label="Email">
-                <button class="btn btn-primary" type="button">Subscribe</button>
-              </div>
+        <div class="section-header-mini">
+          <h2>Featured Books</h2>
+          <router-link to="/books" class="view-all">View all</router-link>
+        </div>
+        
+        <div v-if="loading" class="text-center py-3">
+          <div class="spinner-border spinner-sm" role="status"></div>
+        </div>
+
+        <div v-else class="book-row">
+          <div class="book-card" 
+               v-for="book in featuredBooks.slice(0, 5)" 
+               :key="book.id"
+               @click="goToProductPage(book.id)">
+            <div class="book-image">
+              <img :src="getImageUrl(book.imageLink)" :alt="book.title">
             </div>
+            <div class="book-info">
+              <h3 class="book-title">{{ book.title }}</h3>
+              <p class="book-author">{{ book.author }}</p>
+              <div class="book-price">${{ book.price.toFixed(2) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collection Cards -->
+    <section class="collection-section">
+      <div class="container">
+        <div class="collection-row">
+          <div 
+            class="collection-card collection-primary" 
+            @click="$router.push('/books?new=true')"
+          >
+            <h3>New Arrivals</h3>
+            <div class="collection-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </div>
+          <div 
+            class="collection-card collection-secondary" 
+            @click="$router.push('/books?bestseller=true')"
+          >
+            <h3>Bestsellers</h3>
+            <div class="collection-link">Explore <i class="bi bi-arrow-right"></i></div>
+          </div>
+          <div 
+            class="collection-card collection-tertiary" 
+            @click="$router.push('/books?sale=true')"
+          >
+            <h3>On Sale</h3>
+            <div class="collection-link">Explore <i class="bi bi-arrow-right"></i></div>
           </div>
         </div>
       </div>
@@ -141,47 +117,17 @@
 </template>
 
 <script>
-import HeroSection from '@/components/HeroSection.vue';
-import SectionHeader from '@/components/SectionHeader.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import BookCard from '@/components/BookCard.vue';
-
 export default {
   name: 'MainView',
-  components: {
-    HeroSection,
-    SectionHeader,
-    LoadingSpinner,
-    BookCard
-  },
   data() {
     return {
       loading: true,
       books: [],
       featuredBooks: [],
+      searchQuery: '',
       popularGenres: [
-        'Fiction', 'Romance', 'Mystery', 'Science Fiction', 
-        'Fantasy', 'Biography', 'History', 'Poetry'
-      ],
-      newsArticles: [
-        {
-          title: 'Summer Reading List 2023',
-          excerpt: 'Check out the most anticipated books for your summer reading pleasure.',
-          image: 'https://source.unsplash.com/random/300x200/?beach,book',
-          date: 'June 15, 2023'
-        },
-        {
-          title: 'Author Spotlight: Jane Doe',
-          excerpt: 'Bestselling author Jane Doe talks about her creative process and upcoming projects.',
-          image: 'https://source.unsplash.com/random/300x200/?author',
-          date: 'June 10, 2023'
-        },
-        {
-          title: 'BookNest Literary Awards',
-          excerpt: 'The annual BookNest Literary Awards ceremony will be held next month.',
-          image: 'https://source.unsplash.com/random/300x200/?award',
-          date: 'June 5, 2023'
-        }
+        'Historical Fiction', 'Fantasy', 'Poetry', 
+        'Romance', 'Modernist Fiction', 'Classic'
       ]
     };
   },
@@ -196,8 +142,12 @@ export default {
         const data = await response.json();
         this.books = data.books;
         
-        // Generate featured books (random selection)
-        this.featuredBooks = this.getRandomBooks(this.books, 8);
+        // Get featured books with high ratings
+        this.featuredBooks = this.books
+          .filter(book => (book.rating || 0) >= 4.0)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 5);
+          
         this.loading = false;
       } catch (error) {
         console.error('Error fetching books:', error);
@@ -210,182 +160,395 @@ export default {
       }
       return imageLink || 'https://via.placeholder.com/150x200?text=No+Image';
     },
-    getRandomBooks(books, count) {
-      let shuffled = [...books].sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, count);
+    goToProductPage(bookId) {
+      this.$router.push(`/product/${bookId}`);
     },
     getCategoryIcon(genre) {
-      // Map genres to Bootstrap icons
       const iconMap = {
-        'Fiction': 'bi bi-book',
-        'Romance': 'bi bi-heart',
-        'Mystery': 'bi bi-question-circle',
-        'Science Fiction': 'bi bi-rocket',
+        'Historical Fiction': 'bi bi-book-half',
         'Fantasy': 'bi bi-stars',
-        'Biography': 'bi bi-person',
-        'History': 'bi bi-hourglass',
-        'Poetry': 'bi bi-chat-quote'
+        'Poetry': 'bi bi-chat-quote',
+        'Romance': 'bi bi-heart',
+        'Modernist Fiction': 'bi bi-pencil',
+        'Classic': 'bi bi-bookmark'
       };
       
       return iconMap[genre] || 'bi bi-book';
+    },
+    searchBooks() {
+      if (this.searchQuery.trim()) {
+        this.$router.push({
+          path: '/books',
+          query: { search: this.searchQuery.trim() }
+        });
+      }
+    },
+    subscribeNewsletter() {
+      // Simple confirmation for newsletter subscription
+      alert('Thank you for subscribing!');
     }
   }
 };
 </script>
 
 <style scoped>
-/* Featured Books Section */
-.featured-books {
-  padding: 20px 0;
+/* Main View Styling - Minimalist Version */
+.main-view {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --accent-color: #fd7e14;
+  --light-bg: #f8f9fa;
+  --dark-bg: #212529;
+  --section-spacing: 3rem;
 }
 
-.static-book-card {
+/* Hero Section */
+.hero-section {
+  padding: 3rem 0;
+  background-color: var(--light-bg);
   position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  background: white;
-  height: 100%;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  display: flex;
-  flex-direction: column;
-  cursor: default;
 }
 
-.static-book-card:hover {
-  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.search-container {
+  max-width: 500px;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-book-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.floating-book {
+  position: absolute;
+  width: 150px;
+  transition: all 0.5s ease;
+  transform: rotate(5deg);
+}
+
+.floating-book:nth-child(1) {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  z-index: 3;
+}
+
+.floating-book:nth-child(2) {
+  top: 50px;
+  left: 20%;
+  transform: translateX(-50%) rotate(8deg);
+  z-index: 2;
+}
+
+.floating-book:nth-child(3) {
+  top: 80px;
+  left: 80%;
+  transform: translateX(-50%) rotate(-10deg);
+  z-index: 1;
+}
+
+.floating-book img {
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Genre Pills Section */
+.genre-pills-section {
+  padding: 1.5rem 0;
+  background: white;
+}
+
+.genre-pill-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.genre-pill-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.genre-pill {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--light-bg);
+  border-radius: 50px;
+  text-decoration: none;
+  color: var(--dark-bg);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.genre-pill:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.genre-pill i {
+  font-size: 1rem;
+}
+
+.genre-pill-more {
+  background-color: var(--dark-bg);
+  color: white;
+}
+
+/* Book Section */
+.book-section {
+  padding: 2rem 0;
+}
+
+.section-header-mini {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header-mini h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.view-all {
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.book-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.25rem;
+  padding: 0.5rem 0.25rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.book-row::-webkit-scrollbar {
+  display: none;
+}
+
+.book-card {
+  flex: 0 0 auto;
+  width: 180px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.book-card:hover {
   transform: translateY(-5px);
 }
 
-.static-book-card .card-image {
-  position: relative;
+.book-image {
+  height: 250px;
   overflow: hidden;
-  height: 200px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  margin-bottom: 0.75rem;
+  background-color: var(--light-bg);
 }
 
-.static-book-card .card-image img {
+.book-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 15px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
 }
 
-.static-book-card .card-content {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex-grow: 1;
+.book-info {
+  padding: 0.5rem 0;
 }
 
-.static-book-card .card-badges {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.static-book-card .genre-badge {
-  background-color: #f0f4ff;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  color: #4a6cf7;
+.book-title {
+  font-size: 0.9rem;
   font-weight: 600;
-}
-
-.static-book-card .rating-badge {
-  color: #f59e0b;
-  font-weight: 600;
-  font-size: 0.75rem;
-}
-
-.static-book-card .rating-badge i {
-  font-size: 0.75rem;
-  margin-right: 3px;
-}
-
-.static-book-card .book-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 4px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 2.4em;
 }
 
-.static-book-card .book-author {
-  color: #666;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.static-book-card .card-footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.static-book-card .price {
-  font-weight: 700;
-  color: #4a6cf7;
-  font-size: 1.1rem;
-}
-
-.static-book-card .view-more-link {
-  color: #555;
-  text-decoration: none;
+.book-author {
   font-size: 0.8rem;
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-price {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+/* Collection Section */
+.collection-section {
+  padding: 2rem 0;
+}
+
+.collection-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.collection-card {
+  height: 120px;
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+.collection-card:hover {
+  transform: translateY(-3px);
+}
+
+.collection-primary {
+  background-color: var(--primary-color);
+}
+
+.collection-secondary {
+  background-color: var(--dark-bg);
+}
+
+.collection-tertiary {
+  background-color: var(--accent-color);
+}
+
+.collection-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.collection-link {
+  font-size: 0.9rem;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 5px;
-  transition: color 0.3s ease;
-  cursor: pointer;
+  gap: 0.5rem;
+  opacity: 0.9;
 }
 
-.static-book-card .view-more-link:hover {
-  color: #4a6cf7;
+.collection-card:hover .collection-link {
+  opacity: 1;
 }
 
-.static-book-card .view-more-link i {
-  transition: transform 0.3s ease;
+/* Newsletter Mini Section */
+.newsletter-mini {
+  padding: 2.5rem 0;
+  background-color: var(--light-bg);
 }
 
-.static-book-card .view-more-link:hover i {
-  transform: translateX(3px);
+.newsletter-content {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-/* Responsive styling */
+.newsletter-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.newsletter-form {
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .hero-image-wrapper {
+    height: 250px;
+    margin-top: 2rem;
+  }
+  
+  .floating-book {
+    width: 130px;
+  }
+  
+  .collection-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .collection-card:last-child {
+    grid-column: span 2;
+  }
+}
+
 @media (max-width: 767.98px) {
-  .static-book-card .card-image {
-    height: 150px;
+  .hero-section {
+    text-align: center;
+    padding: 2rem 0;
   }
   
-  .static-book-card .card-content {
-    padding: 10px;
+  .hero-title {
+    font-size: 2rem;
   }
   
-  .static-book-card .book-title {
-    font-size: 0.9rem;
-    height: 2.2em;
+  .search-container {
+    margin: 0 auto;
   }
   
-  .static-book-card .book-author {
-    font-size: 0.8rem;
+  .hero-image-wrapper {
+    height: 200px;
   }
   
-  .static-book-card .price {
-    font-size: 1rem;
+  .floating-book {
+    width: 100px;
+  }
+  
+  .book-card {
+    width: 150px;
+  }
+  
+  .book-image {
+    height: 200px;
+  }
+  
+  .collection-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .collection-card {
+    height: 100px;
+  }
+  
+  .collection-card:last-child {
+    grid-column: span 1;
   }
 }
-
-/* ...existing styles for other sections... */
 </style>
