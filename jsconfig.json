@@ -15,5 +15,11 @@
       "dom.iterable",
       "scripthost"
     ]
-  }
+  },
+  "exclude": [
+    "src/server/server.js"
+  ],
+  "include": [
+    "src/**/*"
+  ]
 }

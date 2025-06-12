@@ -1,0 +1,129 @@
+=== 2025-06-12 22:29:37 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 30
+                    [title] => Absalom, Absalom!
+                    [author] => William Faulkner
+                    [imageLink] => images/absalom-absalom.jpg
+                    [price] => 15.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => Zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-Q1SAL6LD5
+        )
+
+    [subtotal] => 15.99
+    [shippingCost] => 5.99
+    [total] => 21.98
+    [userId] => 2
+)
+
+
+=== 2025-06-12 22:31:28 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 30
+                    [title] => Absalom, Absalom!
+                    [author] => William Faulkner
+                    [imageLink] => images/absalom-absalom.jpg
+                    [price] => 15.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-97HAN23TM
+        )
+
+    [subtotal] => 15.99
+    [shippingCost] => 5.99
+    [total] => 21.98
+    [userId] => 2
+)
+
+
+=== 2025-06-12 22:35:46 ===
+stdClass Object
+(
+    [items] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [bookId] => 45
+                    [title] => A Doll's House
+                    [author] => Henrik Ibsen
+                    [imageLink] => images/a-Dolls-house.jpg
+                    [price] => 9.99
+                    [quantity] => 1
+                )
+
+        )
+
+    [shipping] => stdClass Object
+        (
+            [firstName] => zwe
+            [lastName] => zwe
+            [email] => zwehtetzaw777@gmail.com
+            [address] => 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+            [city] => Chiba
+            [state] => Chiba Prefecture
+            [zip] => 2600844
+            [phone] => +601153048339
+        )
+
+    [payment] => stdClass Object
+        (
+            [method] => paypal
+            [email] => zwehtetzaw777@gmail.com
+            [transactionId] => PP-QQJNNAOX7
+        )
+
+    [subtotal] => 9.99
+    [shippingCost] => 5.99
+    [total] => 15.98
+    [userId] => 2
+)
+
+

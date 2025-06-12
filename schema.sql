@@ -9,3 +9,37 @@ CREATE TABLE users (
   address TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE carts (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  book_json_id INT NOT NULL,  -- Make sure this column is named book_json_id
+  quantity INT DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status VARCHAR(50) DEFAULT 'pending',  -- e.g., pending, completed, canceled
+  total_amount DECIMAL(10, 2) NOT NULL,
+  payment_method VARCHAR(50),
+  payment_status VARCHAR(50) DEFAULT 'unpaid',
+  shipping_address TEXT,
+  tracking_number VARCHAR(100),
+  expected_delivery_date DATE,
+  order_notes TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE order_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL,
+  book_json_id INT NOT NULL,
+  quantity INT NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,  -- price per unit at purchase time
+  FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+

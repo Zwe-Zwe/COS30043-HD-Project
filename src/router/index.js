@@ -3,23 +3,57 @@ import MainView from "../views/MainView.vue";
 import UserLogin from "../views/UserLogin.vue";
 import UserRegister from "../views/UserRegister.vue";
 import CartView from "../views/CartView.vue";
+import CheckoutView from "../views/CheckoutView.vue";
+import OrderConfirmationView from "../views/OrderConfirmationView.vue";
+import OrderHistoryView from "../views/OrderHistoryView.vue";
 import ProductDetails from "../views/ProductDetails.vue";
-import PurchasesHistory from "../views/PurchasesHistory.vue";
 import AccountView from "../views/AccountView.vue";
+import Books from "../views/BooksView.vue";
+import { isLoggedIn } from "@/utils/auth";
 
 const routes = [
   { path: "/", name: "Home", component: MainView },
   { path: "/product/:id", name: "Product", component: ProductDetails },
   { path: "/cart", name: "Cart", component: CartView },
+  { path: "/checkout", name: "Checkout", component: CheckoutView },
+  {
+    path: "/order-confirmation",
+    name: "OrderConfirmation",
+    component: OrderConfirmationView,
+  },
+  {
+    path: "/order-history",
+    name: "OrderHistory",
+    component: OrderHistoryView,
+  },
   { path: "/register", name: "Register", component: UserRegister },
   { path: "/login", name: "Login", component: UserLogin },
   { path: "/account", name: "Account", component: AccountView },
-  { path: "/purchases", name: "Purchases", component: PurchasesHistory },
+  { path: "/books", name: "Books", component: Books },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+// Add navigation guards to protected routes
+router.beforeEach((to, from, next) => {
+  // Define which routes require authentication
+  const requiresAuth = [
+    "account",
+    "purchases",
+    "checkout",
+    "orderHistory",
+  ].includes(to.name);
+
+  if (requiresAuth && !isLoggedIn()) {
+    // Redirect to login if trying to access protected route while not logged in
+    next({ name: "Login", query: { redirect: to.fullPath } });
+  } else {
+    // Continue as normal
+    next();
+  }
 });
 
 export default router;
