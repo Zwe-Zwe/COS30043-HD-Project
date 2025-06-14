@@ -1,0 +1,17 @@
+[2025-06-14 14:30:28] REQUEST RECEIVED
+[2025-06-14 14:30:28] METHOD: POST
+[2025-06-14 14:30:28] POST data: Array
+(
+    [order_id] => 6
+    [payment_method] => bank-transfer
+    [payment_status] => paid
+    [shipping_address] => Name: zwe zwe
+Address: 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+City: Chiba, State: Chiba Prefecture, Zip: 2600844
+Phone: +601153048339
+Email: zwehtetzaw777@gmail.com
+    [customer_notes] => 
+)
+
+[2025-06-14 14:30:28] SQL Query: UPDATE orders SET payment_method = ?, payment_status = ?, shipping_address = ?, customer_notes = ? WHERE id = ?
+[2025-06-14 14:30:28] ERROR: Unknown column 'customer_notes' in 'field list'

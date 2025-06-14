@@ -478,19 +478,38 @@ export default {
     try {
       const response = await fetch('http://localhost/COS30043-HD-Project/api/books.php');
       const data = await response.json();
-      this.books = data.books;
+      
+      // Fix: Handle the API response properly regardless of structure
+      if (Array.isArray(data)) {
+        this.books = data; // Direct array response
+      } else if (data.books && Array.isArray(data.books)) {
+        this.books = data.books; // Nested under 'books' property
+      } else {
+        // Try to find any array in the response that looks like books
+        const possibleArrays = Object.values(data).filter(val => Array.isArray(val));
+        this.books = possibleArrays.length > 0 ? possibleArrays[0] : [];
+      }
+      
+      console.log('Books loaded:', this.books);
+      
+      // Make sure books is at least an empty array if everything fails
+      if (!this.books) {
+        this.books = [];
+        console.warn('No books found - initialized as empty array');
+      }
       
       // Extract unique genres and languages
       this.genres = [...new Set(this.books.map(book => book.genre))].sort();
       this.languages = [...new Set(this.books.map(book => book.language))].sort();
       
       // Set max price to the highest book price (rounded up to nearest 10)
-      const maxPrice = Math.ceil(Math.max(...this.books.map(book => book.price)) / 10) * 10;
+      const maxPrice = Math.ceil(Math.max(...this.books.map(book => book.price || 0)) / 10) * 10 || 100;
       this.filters.maxPrice = maxPrice;
       
       this.loading = false;
     } catch (error) {
       console.error('Error fetching books:', error);
+      this.books = []; // Ensure books is at least an empty array
       this.loading = false;
     }
   },

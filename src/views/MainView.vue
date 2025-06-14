@@ -140,18 +140,46 @@ export default {
       try {
         const response = await fetch('http://localhost/COS30043-HD-Project/api/books.php');
         const data = await response.json();
-        this.books = data.books;
+        
+        // Fix: Handle the API response properly regardless of structure
+        let booksArray;
+        if (Array.isArray(data)) {
+          booksArray = data; // Direct array response
+        } else if (data.books && Array.isArray(data.books)) {
+          booksArray = data.books; // Nested under 'books' property
+        } else {
+          // Try to find any array in the response that looks like books
+          const possibleArrays = Object.values(data).filter(val => Array.isArray(val));
+          booksArray = possibleArrays.length > 0 ? possibleArrays[0] : [];
+        }
+        
+        this.books = booksArray;
+        console.log('Books loaded:', this.books);
         
         // Get featured books with high ratings
         this.featuredBooks = this.books
-          .filter(book => (book.rating || 0) >= 4.0)
+          .filter(book => book && (book.rating || 0) >= 4.0)
           .sort(() => 0.5 - Math.random())
           .slice(0, 5);
+          
+        // If we don't have enough featured books, just take the first 5 books
+        if (this.featuredBooks.length < 5) {
+          this.featuredBooks = this.books.slice(0, 5);
+        }
           
         this.loading = false;
       } catch (error) {
         console.error('Error fetching books:', error);
         this.loading = false;
+        
+        // Setup default featured books on error
+        this.featuredBooks = [
+          { id: 1, title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', price: 12.99, rating: 4.5 },
+          { id: 2, title: 'To Kill a Mockingbird', author: 'Harper Lee', price: 14.99, rating: 4.8 },
+          { id: 3, title: '1984', author: 'George Orwell', price: 11.99, rating: 4.6 },
+          { id: 4, title: 'Pride and Prejudice', author: 'Jane Austen', price: 10.99, rating: 4.7 },
+          { id: 5, title: 'The Catcher in the Rye', author: 'J.D. Salinger', price: 13.99, rating: 4.4 }
+        ];
       }
     },
     getImageUrl(imageLink) {

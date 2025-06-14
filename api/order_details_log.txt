@@ -1,0 +1,55 @@
+[2025-06-14 14:28:39] UPDATE ORDER DETAILS - Request received
+[2025-06-14 14:28:39] REQUEST METHOD: POST
+[2025-06-14 14:28:39] POST data: Array
+(
+    [order_id] => 6
+    [payment_method] => bank-transfer
+    [payment_status] => unpaid
+    [shipping_address] => Name: zwe zwe
+Address: 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+City: Chiba, State: Chiba Prefecture, Zip: 2600844
+Phone: +601153048339
+Email: zwehtetzaw777@gmail.com
+    [customer_notes] => 
+)
+
+[2025-06-14 14:28:39] SQL Query: UPDATE orders SET payment_method = ?, payment_status = ?, shipping_address = ?, customer_notes = ? WHERE id = ?
+[2025-06-14 14:28:39] Params: bank-transfer, unpaid, Name: zwe zwe
+Address: 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+City: Chiba, State: Chiba Prefecture, Zip: 2600844
+Phone: +601153048339
+Email: zwehtetzaw777@gmail.com, , 6
+[2025-06-14 14:28:39] Error: Unknown column 'customer_notes' in 'field list'
+[2025-06-14 14:29:20] UPDATE ORDER DETAILS - Request received
+[2025-06-14 14:29:20] REQUEST METHOD: GET
+[2025-06-14 14:29:20] Error: Invalid method: GET
+[2025-06-14 14:39:31] Update order details - Request received
+[2025-06-14 14:39:31] REQUEST METHOD: POST
+[2025-06-14 14:39:31] POST DATA: Array
+(
+    [order_id] => 6
+    [payment_method] => bank-transfer
+    [payment_status] => paid
+    [shipping_address] => Name: zwe zwe
+Address: 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+City: Chiba, State: Chiba Prefecture, Zip: 2600844
+Phone: +601153048339
+Email: zwehtetzaw777@gmail.com
+    [customer_notes] => 
+)
+
+[2025-06-14 14:39:31] SQL: UPDATE orders SET payment_method = ?, payment_status = ?, shipping_address = ?, customer_notes = ? WHERE id = ?
+[2025-06-14 14:39:31] Parameters: Array
+(
+    [0] => bank-transfer
+    [1] => paid
+    [2] => Name: zwe zwe
+Address: 千葉市中央区千葉寺町705番地14ハイブリッジ千葉寺２０２号
+City: Chiba, State: Chiba Prefecture, Zip: 2600844
+Phone: +601153048339
+Email: zwehtetzaw777@gmail.com
+    [3] => 
+    [4] => 6
+)
+
+[2025-06-14 14:39:31] ERROR: Unknown column 'customer_notes' in 'field list'
